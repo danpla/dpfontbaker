@@ -1,0 +1,13 @@
+# 100% scale
+pxSize 1000
+pxPerEm 1000
+pair a b 1
+pair a c 10
+pair a d 100
+pair a e 1000
+pair a f -1
+pair a g -10
+pair a h -100
+pair a i -1000
+
+

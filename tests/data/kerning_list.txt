@@ -1,0 +1,13 @@
+# The key is font name without the "kerning_" prefix and an extension.
+# The value is the kerning source table. Can be:
+#     "gpos"
+#     "kern"
+#     "kernAndGpos"
+
+gpos_classes       gpos
+gpos_pairs         gpos
+gpos_pairs_device1 gpos
+gpos_pairs_device2 gpos
+gpos_pairs_device3 gpos
+gpos_script        kernAndGpos
+kern               kern

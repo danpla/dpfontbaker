@@ -1,0 +1,11 @@
+# 56.5% scale
+pxSize 565
+pxPerEm 1000
+pair a b 1
+pair a c 6
+pair a d 57
+pair a e 565
+pair a f -1
+pair a g -6
+pair a h -57
+pair a i -565

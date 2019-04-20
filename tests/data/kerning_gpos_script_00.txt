@@ -1,0 +1,15 @@
+# Test that we collect kern features from all scripts and languages
+pxSize 1000
+pxPerEm 1000
+
+# Pairs from pairwise lookup
+pair a a 1  # DFLT{dflt}
+pair a b 1  # latn{dflt}
+pair b a 1  # cyrl{dflt}
+pair b b 1  # cyrl{RUS}
+
+# Pairs from class lookup
+pair c c 1  # DFLT{dflt}
+pair c d 1  # latn{dflt}
+pair d c 1  # cyrl{dflt}
+pair d d 1  # cyrl{RUS}

@@ -1,0 +1,6 @@
+# Device table format 3 (8 bits, -128 - 127)
+# Kerning for all pairs is 1
+pxSize 150
+pxPerEm 1000
+pair a a -128
+pair a b 127

@@ -1,0 +1,19 @@
+# 100% scale
+pxSize 1000
+pxPerEm 1000
+pair a b 1
+pair a c 10
+pair a d 100
+pair a e 1000
+pair a f -1
+pair a g -10
+pair a h -100
+pair a i -1000
+pair b a 2
+pair b b 20
+pair b c 200
+pair b d 2000
+pair b e -2
+pair b f -20
+pair b g -200
+pair b h -2000

@@ -1,0 +1,9 @@
+# collection00.ttc and collection01.otc was created with FontForge,
+# without and with "As CFF fonts" option respectively.
+# collection02.ttc and collection03.otc are the previous two fonts,
+# but created with "Merge tables across fonts" disabled.
+
+collection00.ttc
+collection01.otc
+collection02.ttc
+collection03.otc

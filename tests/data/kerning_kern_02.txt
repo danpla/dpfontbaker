@@ -1,0 +1,7 @@
+# 3.5% scale
+pxSize 35
+pxPerEm 1000
+pair a d 4
+pair a e 35
+pair a h -4
+pair a i -35
