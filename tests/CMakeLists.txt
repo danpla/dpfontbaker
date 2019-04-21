@@ -28,7 +28,7 @@ add_executable(
     ../src/unicode.cpp
 )
 
-target_include_directories(tests PRIVATE ../src ../external)
+target_include_directories(tests PRIVATE ../src ../src/external)
 
 set_target_properties(
     tests

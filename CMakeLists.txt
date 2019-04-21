@@ -38,7 +38,7 @@ add_executable(
 target_include_directories(
     dpfb
     PRIVATE
-    src external
+    src src/external
 )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
@@ -67,7 +67,7 @@ endif()
 
 if (DPFB_USE_STBTT)
     # Extract version
-    file(STRINGS external/stb_truetype.h LINE LIMIT_COUNT 1)
+    file(STRINGS src/external/stb_truetype.h LINE LIMIT_COUNT 1)
     string(
         REGEX MATCH
         "// stb_truetype.h - v(.*) - public domain"
