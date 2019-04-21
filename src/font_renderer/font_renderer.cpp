@@ -1,11 +1,7 @@
 
 #include "font_renderer/font_renderer.h"
 
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-
+#include "plugin_utils.h"
 #include "str.h"
 
 
@@ -26,22 +22,18 @@ FontRenderer* FontRenderer::create(
 }
 
 
-FontRendererCreator* FontRendererCreator::creators;
+FontRendererCreator* FontRendererCreator::list;
 
 
 const FontRendererCreator* FontRendererCreator::find(const char* name)
 {
-    for (auto* creator = creators; creator; creator = creator->next)
-        if (std::strcmp(name, creator->getName()) == 0)
-            return creator;
-
-    return nullptr;
+    return findPlugin<FontRendererCreator>(name);
 }
 
 
 const FontRendererCreator* FontRendererCreator::getFirst()
 {
-    return creators;
+    return list;
 }
 
 
@@ -54,20 +46,7 @@ const FontRendererCreator* FontRendererCreator::getNext() const
 FontRendererCreator::FontRendererCreator(const char* name)
     : name {name}
 {
-    assert(name);
-
-    if (find(name)) {
-        std::fprintf(
-            stderr, "FontRenderer \"%s\" is already registered\n", name);
-        std::exit(EXIT_FAILURE);
-    }
-
-    auto** pos = &creators;
-    while (*pos && std::strcmp((*pos)->name, name) < 0)
-        pos = &(*pos)->next;
-
-    next = *pos;
-    *pos = this;
+    LINK_PLUGIN(FontRendererCreator);
 }
 
 

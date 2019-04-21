@@ -38,7 +38,7 @@ public:
         streams::Stream& stream,
         const Image& image) const = 0;
 private:
-    static ImageWriter* writers;
+    static ImageWriter* list;
 
     const char* name;
     const char* fileExtension;

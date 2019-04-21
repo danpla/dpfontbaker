@@ -1,11 +1,7 @@
 
 #include "font_writer/font_writer.h"
 
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-
+#include "plugin_utils.h"
 #include "str.h"
 
 
@@ -27,7 +23,7 @@ const FontWriter& FontWriter::get(const char* name)
 
 const FontWriter* FontWriter::getFirst()
 {
-    return writers;
+    return list;
 }
 
 
@@ -37,28 +33,14 @@ const FontWriter* FontWriter::getNext() const
 }
 
 
-FontWriter* FontWriter::writers;
+FontWriter* FontWriter::list;
 
 
 FontWriter::FontWriter(const char* name, const char* fileExtension)
     : name {name}
     , fileExtension {fileExtension}
 {
-    assert(name);
-    assert(fileExtension);
-
-    if (find(name)) {
-        std::fprintf(
-            stderr, "FontWriter \"%s\" is already registered\n", name);
-        std::exit(EXIT_FAILURE);
-    }
-
-    auto** pos = &writers;
-    while (*pos && std::strcmp((*pos)->name, name) < 0)
-        pos = &(*pos)->next;
-
-    next = *pos;
-    *pos = this;
+    LINK_PLUGIN(FontWriter);
 }
 
 
@@ -76,10 +58,6 @@ const char* FontWriter::getFileExtension() const
 
 const FontWriter* FontWriter::find(const char* name)
 {
-    for (auto* writer = writers; writer; writer = writer->next)
-        if (std::strcmp(name, writer->name) == 0)
-            return writer;
-
-    return nullptr;
+    return findPlugin<FontWriter>(name);
 }
 

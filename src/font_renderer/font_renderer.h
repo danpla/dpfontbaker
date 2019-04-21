@@ -99,7 +99,7 @@ public:
 
     virtual FontRenderer* create(const FontRendererArgs& args) const = 0;
 private:
-    static FontRendererCreator* creators;
+    static FontRendererCreator* list;
 
     const char* name;
     FontRendererCreator* next;

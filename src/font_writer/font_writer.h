@@ -36,7 +36,7 @@ public:
         const Font& font,
         const ImageNameFormatter& imageNameFormatter) const = 0;
 private:
-    static FontWriter* writers;
+    static FontWriter* list;
 
     const char* name;
     const char* fileExtension;
