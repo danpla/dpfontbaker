@@ -13,9 +13,6 @@
 #include "font_renderer/font_renderer.h"
 
 
-namespace font_renderer {
-
-
 class StbFontRenderer : public FontRenderer {
 public:
     explicit StbFontRenderer(const FontRendererArgs& args);
@@ -138,7 +135,5 @@ public:
 
 static StbFontRendererCreator creatorInstance;
 
-
-}
 
 #endif  // DPFB_USE_STBTT

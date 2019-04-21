@@ -17,9 +17,6 @@
 #include "unicode.h"
 
 
-namespace font_renderer {
-
-
 template<typename T>
 inline T ftFoor(T i)
 {
@@ -302,7 +299,5 @@ public:
 
 static FtFontRendererCreator creatorInstance;
 
-
-}
 
 #endif  // DPFB_USE_FREETYPE
