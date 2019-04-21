@@ -15,11 +15,17 @@ public:
 };
 
 
+enum class Hinting {
+    normal,
+    light
+};
+
+
 struct FontRendererArgs {
     const std::uint8_t* data;
     std::size_t dataSize;
     int pxSize;
-    bool lightHinting;
+    Hinting hinting;
 };
 
 

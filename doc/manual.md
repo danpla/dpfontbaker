@@ -47,7 +47,10 @@ the proper pixel size using the formula `px = pt * dpi / 72`.
 
 ### Hinting
 
-`-font-light-hinting` enables [light hinting][ft-load-target-light]
+You can control hinting modes with `-hinting` option. Currently, it
+only affects the FreeType renderer.
+
+`-hinting light` enables [light hinting][ft-load-target-light]
 mode for FreeType renderer, which usually looks better than normal
 hinting, especially for small font sizes.
 

@@ -27,7 +27,7 @@ struct FontBakingOptions {
     std::string fontRenderer;
     int fontIndex;
     int fontPxSize;
-    bool fontLightHinting;
+    Hinting hinting;
     int imageMaxSize;
     Edge imagePadding;
     Edge glyphPaddingInner;

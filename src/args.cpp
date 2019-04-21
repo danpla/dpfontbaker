@@ -27,7 +27,6 @@ int fontDpi = 72;
 const char* fontExportFormat = "json";
 const char* fontExportName = "";
 int fontIndex = 0;
-bool fontLightHinting = false;
 const char* fontRenderer = (
     #ifdef USE_FREETYPE
     "ft"
@@ -40,6 +39,7 @@ int fontSize = 16;
 int glyphPaddingInner[4];
 int glyphPaddingOuter[4];
 int glyphSpacing[2] = {1, 1};
+const char* hinting = "normal";
 const char* imageFormat = "png";
 int imageMaxCount = 30;
 int imageMaxSize = 1024;
@@ -71,14 +71,14 @@ const char* help = (
     "  -font-index\n"
     "           0-based index of font in a collection (TTC and OTC).\n"
     "           Default is 0.\n"
-    "  -font-light-hinting\n"
-    "           Use light font hinting.\n"
     "  -font-size SIZE\n"
     "           Font size. Default is %i.\n"
     "  -font-renderer NAME\n"
     "           Font renderer. Default is \"%s\".\n"
     "  -help\n"
     "           Print this help and exit.\n"
+    "  -hinting MODE\n"
+    "           Hinting mode. Default is \"%s\".\n"
     "  -image-format NAME\n"
     "           Image format. Default is \"%s\".\n"
     "  -glyph-padding-inner TOP[:BOTTOM:LEFT:RIGHT]\n"
@@ -103,6 +103,10 @@ const char* help = (
     "           Output directory. Default is \".\".\n"
     "  -version\n"
     "           Print program version and exit.\n"
+    "\n"
+    "Hinting modes (-hinting):\n"
+    "  normal  normal hinting\n"
+    "  light   light hinting; may look better than normal\n"
     "\n"
     "Kerning pairs source (-kerning):\n"
     "  none  don't extract kerning pairs\n"
@@ -146,6 +150,7 @@ static void printHelp(const char* progName)
         progName,
         codePoints,
         fontDpi, fontExportFormat, fontSize, fontRenderer,
+        hinting,
         imageFormat,
         imageMaxCount, imageMaxSize, imageSizeMode);
 
@@ -312,12 +317,12 @@ void parse(int argc, char* argv[])
         OPT(fontExportFormat);
         OPT(fontExportName);
         OPT(fontIndex);
-        OPT(fontLightHinting);
         OPT(fontRenderer);
         OPT(fontSize);
         OPT(glyphPaddingInner);
         OPT(glyphPaddingOuter);
         OPT(glyphSpacing);
+        OPT(hinting);
         OPT(imageFormat);
         OPT(imageMaxCount);
         OPT(imageMaxSize);

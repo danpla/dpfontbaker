@@ -125,7 +125,7 @@ FtFontRenderer::FtFontRenderer(const FontRendererArgs& args)
     }
 
     loadFlags = FT_LOAD_DEFAULT;
-    if (args.lightHinting)
+    if (args.hinting == Hinting::light)
         loadFlags |= FT_LOAD_TARGET_LIGHT;
 }
 

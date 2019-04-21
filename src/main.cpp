@@ -89,6 +89,15 @@ static int ptToPx(int pt, int dpi)
 
 static FontBakingOptions createFontBakingOptions()
 {
+    Hinting hinting;
+    if (std::strcmp(args::hinting, "normal") == 0)
+        hinting = Hinting::normal;
+    else if (std::strcmp(args::hinting, "light") == 0)
+        hinting = Hinting::light;
+    else
+        throw std::runtime_error(str::format(
+            "Invalid hinting \"%s\"", args::hinting));
+
     KerningSource kerningSource;
     if (std::strcmp(args::kerning, "none") == 0)
         kerningSource = KerningSource::none;
@@ -107,7 +116,7 @@ static FontBakingOptions createFontBakingOptions()
         args::fontRenderer,
         args::fontIndex,
         ptToPx(args::fontSize, args::fontDpi),
-        args::fontLightHinting,
+        hinting,
         args::imageMaxSize,
         Edge(
             args::imagePadding[0],

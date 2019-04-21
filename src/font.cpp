@@ -53,7 +53,7 @@ Font::Font(
         &fontData[0],
         fontData.size(),
         bakingOptions.fontPxSize,
-        bakingOptions.fontLightHinting
+        bakingOptions.hinting
     };
 
     try {

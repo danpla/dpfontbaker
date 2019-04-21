@@ -257,7 +257,7 @@ TEST_CASE("Kerning", "[kerning]") {
         for (const auto* c = creator; c; c = c->getNext()) {
             std::unique_ptr<FontRenderer> fontRendererPtr(
                 // The font size doesn't matter
-                c->create({&fontData[0], fontData.size(), 12, false}));
+                c->create({&fontData[0], fontData.size(), 12, {}}));
             INFO("Font renderer " << c->getName());
 
             for (int i = 0; i < 100; ++i) {
