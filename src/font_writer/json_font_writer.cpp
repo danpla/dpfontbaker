@@ -1,5 +1,4 @@
 
-#include <cassert>
 #include <cinttypes>
 #include <cstddef>
 
