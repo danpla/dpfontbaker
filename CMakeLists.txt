@@ -4,6 +4,7 @@ project(dpFontBaker)
 
 option(DPFB_USE_FREETYPE "Include FreeType renderer" ON)
 option(DPFB_USE_STBTT "Include stb_truetype.h renderer" ON)
+option(DPFB_USE_LIBPNG "Enable PNG support" ON)
 option(DPFB_BUILD_TESTS "Build unit tests" OFF)
 
 add_executable(
@@ -48,15 +49,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
     )
 endif()
 
-find_package(PNG REQUIRED)
-target_include_directories(dpfb PRIVATE ${PNG_INCLUDE_DIRS})
-target_link_libraries(dpfb ${PNG_LIBRARIES})
-
 target_compile_definitions(
     dpfb
     PRIVATE
     DPFB_USE_FREETYPE=$<BOOL:${DPFB_USE_FREETYPE}>
     DPFB_USE_STBTT=$<BOOL:${DPFB_USE_STBTT}>
+    DPFB_USE_LIBPNG=$<BOOL:${DPFB_USE_LIBPNG}>
 )
 
 if (DPFB_USE_FREETYPE)
@@ -82,6 +80,12 @@ if (DPFB_USE_STBTT)
     else()
         message(WARNING "Can't extract stb_truetype.h version")
     endif()
+endif()
+
+if (DPFB_USE_LIBPNG)
+    find_package(PNG REQUIRED)
+    target_include_directories(dpfb PRIVATE ${PNG_INCLUDE_DIRS})
+    target_link_libraries(dpfb ${PNG_LIBRARIES})
 endif()
 
 if (DPFB_BUILD_TESTS)

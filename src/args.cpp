@@ -40,7 +40,14 @@ int glyphPaddingInner[4];
 int glyphPaddingOuter[4];
 int glyphSpacing[2] = {1, 1};
 const char* hinting = "normal";
-const char* imageFormat = "png";
+const char* imageFormat = (
+    #if DPFB_USE_LIBPNG
+    "png"
+    #else
+    // We will pick the first available
+    ""
+    #endif
+);
 int imageMaxCount = 30;
 int imageMaxSize = 1024;
 int imagePadding[4] = {1, 1, 1, 1};
@@ -288,6 +295,12 @@ void parse(int argc, char* argv[])
         const auto* c = FontRendererCreator::getFirst();
         assert(c && "All font renderers was disabled at compile time");
         fontRenderer = c->getName();
+    }
+
+    if (!imageFormat[0]) {
+        const auto* w = ImageWriter::getFirst();
+        assert(w && "All image writers was disabled at compile time");
+        imageFormat = w->getName();
     }
 
     for (int i = 1; i < argc; ++i)

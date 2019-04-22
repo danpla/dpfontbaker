@@ -1,4 +1,6 @@
 
+#if DPFB_USE_LIBPNG
+
 #include <cstdio>
 #include <memory>
 #include <string>
@@ -116,3 +118,5 @@ void PngImageWriter::write(
 
 
 static PngImageWriter instance;
+
+#endif  // DPFB_USE_LIBPNG
