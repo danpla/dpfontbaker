@@ -28,7 +28,7 @@ const char* fontExportFormat = "json";
 const char* fontExportName = "";
 int fontIndex = 0;
 const char* fontRenderer = (
-    #ifdef USE_FREETYPE
+    #if DPFB_USE_FREETYPE
     "ft"
     #else
     // We will pick the first available
