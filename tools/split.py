@@ -17,7 +17,7 @@ def parse_args():
             'on a separate PNG image. You can later assemble them '
             'back with join.py.'))
 
-    parser.add_argument('font', help='Path to a JSON font')
+    parser.add_argument('font', help='Path to a JSON font.')
 
     parser.add_argument(
         '-o', '--out-dir', default='',

@@ -15,7 +15,7 @@ def parse_args():
         description=(
             'Join glyph images separated by split.py back to pages.'))
 
-    parser.add_argument('font', help='Path to a JSON font')
+    parser.add_argument('font', help='Path to a JSON font.')
 
     parser.add_argument(
         '-i', '--in-dir', default='',

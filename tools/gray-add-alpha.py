@@ -51,7 +51,7 @@ def parse_args():
             'the same size.'))
 
     parser.add_argument(
-        'images', nargs=argparse.REMAINDER, help='List of images')
+        'images', nargs=argparse.REMAINDER, help='List of images.')
 
     parser.add_argument(
         '-o', '--out-dir', default='',

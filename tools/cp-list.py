@@ -81,15 +81,15 @@ def parse_args():
 
     parser.add_argument(
         'files', nargs=argparse.REMAINDER,
-        help='List of files or "-" to read from stdin')
+        help='List of files or "-" to read from stdin.')
 
     parser.add_argument(
         '-e', '--encoding', default='utf-8',
-        help='Encoding of files. Default is "utf-8"')
+        help='Encoding of files. Default is "utf-8".')
 
     parser.add_argument(
         '-f', '--cp-format', choices=('hex', 'dec'), default='hex',
-        help='Format of code points. Default is "hex"')
+        help='Format of code points. Default is "hex".')
 
     args = parser.parse_args()
     if not args.files:
