@@ -1,5 +1,5 @@
 
-#ifdef DPFB_USE_STBTT
+#if DPFB_USE_STBTT
 
 #if defined(__GNUC__) || defined(__clang__)
     // Clang understands both "GCC" and "clang" names
