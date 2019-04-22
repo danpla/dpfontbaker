@@ -289,19 +289,30 @@ void getValue(char**& cursor, char** optArgsEnd, int (&var)[N])
     } \
 
 
+template<typename T>
+void pickDefaultPlugin(const char*& arg, const char* errorMsg)
+{
+    if (arg[0])
+        return;
+
+    const auto* p = T::getFirst();
+    if (!p) {
+        std::fputs(errorMsg, stderr);
+        std::exit(EXIT_FAILURE);
+    }
+    arg = p->getName();
+}
+
+
 void parse(int argc, char* argv[])
 {
-    if (!fontRenderer[0]) {
-        const auto* c = FontRendererCreator::getFirst();
-        assert(c && "All font renderers was disabled at compile time");
-        fontRenderer = c->getName();
-    }
+    pickDefaultPlugin<FontRendererCreator>(
+        fontRenderer,
+        "All font renderers was disabled at compile time\n");
 
-    if (!imageFormat[0]) {
-        const auto* w = ImageWriter::getFirst();
-        assert(w && "All image writers was disabled at compile time");
-        imageFormat = w->getName();
-    }
+    pickDefaultPlugin<ImageWriter>(
+        fontRenderer,
+        "All image writers was disabled at compile time\n");
 
     for (int i = 1; i < argc; ++i)
         if (std::strcmp(argv[i], "-help") == 0) {
