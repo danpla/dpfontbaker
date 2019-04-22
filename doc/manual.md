@@ -254,6 +254,11 @@ Every script has a comprehensive `--help`.
 dpFontBaker's `-code-points` option.
 
 
+## draw-text.py
+
+`draw-text.py` draws text with a JSON font to a PNG image.
+
+
 ## gray-add-alpha.py
 
 `gray-add-alpha.py` adds alpha to grayscale images, threating black as
