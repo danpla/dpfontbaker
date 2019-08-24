@@ -207,16 +207,6 @@ static void advanceToArg(char**& cursor, char** optArgsEnd)
 }
 
 
-static void getValue(char**& cursor, char** optArgsEnd, bool& var)
-{
-    (void)cursor;
-    (void)optArgsEnd;
-
-    assert(!var);
-    var = true;
-}
-
-
 static void getValue(
     char**& cursor, char** optArgsEnd, const char*& var)
 {
