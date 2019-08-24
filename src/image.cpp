@@ -33,7 +33,7 @@ Image::Image(int w, int h)
         throw std::runtime_error("Height is < 0");
 
     ownData.resize(static_cast<std::size_t>(w) * h);
-    data = &ownData[0];
+    data = ownData.data();
 
 }
 
