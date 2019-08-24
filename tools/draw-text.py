@@ -142,8 +142,6 @@ def render_text(
 
         x += glyph['advance']
 
-    return image
-
 
 def main():
     args = parse_args()
