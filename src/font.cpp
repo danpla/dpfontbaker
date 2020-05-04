@@ -15,6 +15,7 @@
 
 
 using namespace streams;
+using namespace Geometry;
 
 
 static std::vector<std::uint8_t> getData(const std::string& fileName)

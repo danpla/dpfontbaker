@@ -18,6 +18,7 @@
 #include "streams/file_stream.h"
 #include "unicode.h"
 
+using namespace Geometry;
 
 const char* const dirSeparators = (
     #ifdef _WIN32
