@@ -49,9 +49,9 @@ FontMetrics CtFontRenderer::getFontMetrics() const
 GlyphIndex CtFontRenderer::getGlyphIndex(char32_t cp) const
 {
     CGGlyph glyph;
-    UniChar ch = (UniChar)cp;
+    UniChar ch = static_cast<UniChar>(cp);
     if (CTFontGetGlyphsForCharacters(font, &ch, &glyph, 1))
-        return (GlyphIndex)glyph;
+        return static_cast<GlyphIndex>(glyph);
     return 0;
 }
 
@@ -60,13 +60,13 @@ GlyphIndex CtFontRenderer::getGlyphIndex(char32_t cp) const
 GlyphMetrics CtFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
 {
     GlyphMetrics glyphMetrics;
-    CGGlyph glyph = (CGGlyph)glyphIdx;
+    CGGlyph glyph = static_cast<CGGlyph>(glyphIdx);
 
     CGSize advance;
     CTFontGetAdvancesForGlyphs(font, kCTFontOrientationDefault, &glyph, &advance, 1);
     glyphMetrics.advance = round(advance.width);
 
-    CGRect boundingRect = CTFontGetBoundingRectsForGlyphs(font, kCTFontOrientationDefault, &glyph, NULL, 1);
+    CGRect boundingRect = CTFontGetBoundingRectsForGlyphs(font, kCTFontOrientationDefault, &glyph, nullptr, 1);
 #if CORETEXT_SHIFT_X_POSITION
     glyphMetrics.size.w = ceil(boundingRect.size.width) + ceil(boundingRect.origin.x);
     glyphMetrics.offset.x = 0;
@@ -84,6 +84,7 @@ GlyphMetrics CtFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
 
 void CtFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
 {
+    CGGlyph glyph = static_cast<CGGlyph>(glyphIdx);
     if (image.getWidth() == 0 || image.getHeight() == 0)
         return;
 
@@ -91,11 +92,11 @@ void CtFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
     CGContextRef context = CGBitmapContextCreate(image.getData(), image.getWidth(), image.getHeight(),
                                                  8, image.getPitch(), colorSpace, kCGImageAlphaOnly);
 
-    CGFontRef cgFont = CTFontCopyGraphicsFont(font, NULL);
+    CGFontRef cgFont = CTFontCopyGraphicsFont(font, nullptr);
     CGContextSetFont(context, cgFont);
     CGContextSetFontSize(context, CTFontGetSize(font));
     CGContextSetFillColorWithColor(context, CGColorGetConstantColor(kCGColorWhite));
-    CGRect boundingRect = CTFontGetBoundingRectsForGlyphs(font, kCTFontOrientationDefault, (const CGGlyph*)&glyphIdx, NULL, 1);
+    CGRect boundingRect = CTFontGetBoundingRectsForGlyphs(font, kCTFontOrientationDefault, &glyph, nullptr, 1);
     CGPoint position = boundingRect.origin;
 #if CORETEXT_SHIFT_X_POSITION
     position.x = 0;
@@ -103,7 +104,7 @@ void CtFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
     position.x = -position.x;
 #endif
     position.y = -position.y;
-    CGContextShowGlyphsAtPositions(context, (const CGGlyph*)&glyphIdx, &position, 1);
+    CGContextShowGlyphsAtPositions(context, &glyph, &position, 1);
     CGContextFlush(context);
     CGContextRelease(context);
     CFRelease(cgFont);
