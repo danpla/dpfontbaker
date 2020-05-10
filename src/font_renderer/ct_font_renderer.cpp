@@ -69,10 +69,11 @@ GlyphMetrics CtFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
     CGRect boundingRect = CTFontGetBoundingRectsForGlyphs(font, kCTFontOrientationDefault, &glyph, NULL, 1);
 #if CORETEXT_SHIFT_X_POSITION
     glyphMetrics.size.w = ceil(boundingRect.size.width) + ceil(boundingRect.origin.x);
+    glyphMetrics.offset.x = 0;
 #else
     glyphMetrics.size.w = ceil(boundingRect.size.width);
-#endif
     glyphMetrics.offset.x = ceil(boundingRect.origin.x);
+#endif
 
     glyphMetrics.size.h = ceil(boundingRect.size.height);
     glyphMetrics.offset.y = ceil(boundingRect.size.height) + ceil(boundingRect.origin.y);
