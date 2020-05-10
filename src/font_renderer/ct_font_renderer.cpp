@@ -26,9 +26,11 @@ private:
 
 CtFontRenderer::CtFontRenderer(const FontRendererArgs& args)
 {
-    CFStringRef fontName = CFStringCreateWithCString(NULL, (const char*)args.data, kCFStringEncodingUTF8);
-    font = CTFontCreateWithName(fontName, args.pxSize, NULL);
-    CFRelease(fontName);
+    CTFontDescriptorRef descriptor = CTFontManagerCreateFontDescriptorFromData(CFDataCreate(nullptr, static_cast<const UInt8*>(args.data), args.dataSize));
+    if (!descriptor)
+        throw FontRendererError("CoreText can't create descriptor");
+    font = CTFontCreateWithFontDescriptor(descriptor, static_cast<CGFloat>(args.pxSize), nullptr);
+    CFRelease(descriptor);
     if (!font)
         throw FontRendererError("CoreText can't init font");
 }
