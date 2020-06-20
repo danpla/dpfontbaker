@@ -36,7 +36,7 @@ struct GlyphMetrics {
     /**
      * Size of the glyph's bitmap.
      */
-    Size size;
+    Geometry::Size size;
 
     /**
      * Offset from the origin.
@@ -45,7 +45,7 @@ struct GlyphMetrics {
      * from the origin on the baseline. Like in FreeType, the y
      * coordinate increases up.
      */
-    Point offset;
+    Geometry::Point offset;
 
     /**
      * X advance.

@@ -29,10 +29,10 @@ struct FontBakingOptions {
     int fontPxSize;
     Hinting hinting;
     int imageMaxSize;
-    Edge imagePadding;
-    Edge glyphPaddingInner;
-    Edge glyphPaddingOuter;
-    Point glyphSpacing;
+    Geometry::Edge imagePadding;
+    Geometry::Edge glyphPaddingInner;
+    Geometry::Edge glyphPaddingOuter;
+    Geometry::Point glyphSpacing;
     KerningSource kerningSource;
 };
 
@@ -69,7 +69,7 @@ struct StyleFlags {
 
 
 struct Page {
-    Size size;
+    Geometry::Size size;
     std::vector<std::uint_least32_t> glyphIndices;
 };
 
@@ -77,11 +77,11 @@ struct Page {
 struct Glyph {
     char32_t cp;
     GlyphIndex glyphIdx;
-    Size size;
-    Point drawOffset;
+    Geometry::Size size;
+    Geometry::Point drawOffset;
     int advance;
     std::uint_least32_t pageIdx;
-    Point pagePos;
+    Geometry::Point pagePos;
 };
 
 

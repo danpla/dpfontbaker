@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(dpFontBaker)
 
+option(DPFB_USE_CORETEXT "Include CoreText renderer" OFF)
 option(DPFB_USE_FREETYPE "Include FreeType renderer" ON)
 option(DPFB_USE_STBTT "Include stb_truetype.h renderer" ON)
 option(DPFB_USE_LIBPNG "Enable PNG support" ON)
@@ -16,6 +17,7 @@ add_executable(
     src/font_renderer/font_renderer.cpp
     src/font_renderer/ft_font_renderer.cpp
     src/font_renderer/stb_font_renderer.cpp
+    src/font_renderer/ct_font_renderer.cpp
     src/font_writer/bmfont_writer.cpp
     src/font_writer/font_writer.cpp
     src/font_writer/json_font_writer.cpp
@@ -52,6 +54,7 @@ endif()
 target_compile_definitions(
     dpfb
     PRIVATE
+    DPFB_USE_CORETEXT=$<BOOL:${DPFB_USE_CORETEXT}>
     DPFB_USE_FREETYPE=$<BOOL:${DPFB_USE_FREETYPE}>
     DPFB_USE_STBTT=$<BOOL:${DPFB_USE_STBTT}>
     DPFB_USE_LIBPNG=$<BOOL:${DPFB_USE_LIBPNG}>
@@ -86,6 +89,12 @@ if (DPFB_USE_LIBPNG)
     find_package(PNG REQUIRED)
     target_include_directories(dpfb PRIVATE ${PNG_INCLUDE_DIRS})
     target_link_libraries(dpfb ${PNG_LIBRARIES})
+endif()
+
+if (DPFB_USE_CORETEXT)
+    target_link_libraries(dpfb "-framework CoreText")
+    target_link_libraries(dpfb "-framework CoreGraphics")
+    target_link_libraries(dpfb "-framework CoreFoundation")
 endif()
 
 if (DPFB_BUILD_TESTS)
