@@ -14,10 +14,10 @@ add_executable(
     src/args.cpp
     src/cp_range.cpp
     src/font.cpp
+    src/font_renderer/core_text_font_renderer.cpp
     src/font_renderer/font_renderer.cpp
     src/font_renderer/ft_font_renderer.cpp
     src/font_renderer/stb_font_renderer.cpp
-    src/font_renderer/ct_font_renderer.cpp
     src/font_writer/bmfont_writer.cpp
     src/font_writer/font_writer.cpp
     src/font_writer/json_font_writer.cpp
