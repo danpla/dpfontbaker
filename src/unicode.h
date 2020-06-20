@@ -42,4 +42,15 @@ char32_t strToCp(const char* str, const char** end = nullptr);
 std::string utf16ToUtf8(const char16_t* begin, const char16_t* end);
 
 
+/**
+ * Encode code point as UTF-16.
+ *
+ * An invalid code point is replaced with the replacement character
+ * (U+FFFD).
+ *
+ * Returns the number of char16_t written.
+ */
+int encodeUtf16(char32_t cp, char16_t out[2]);
+
+
 }

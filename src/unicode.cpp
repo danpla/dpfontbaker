@@ -206,5 +206,21 @@ std::string utf16ToUtf8(const char16_t* begin, const char16_t* end)
 }
 
 
+int encodeUtf16(char32_t cp, char16_t out[2])
+{
+    if (cp < 0x10000) {
+        out[0] = cp;
+        return 1;
+    } else if (cp <= maxCp) {
+        cp -= 0x10000;
+        out[0] = leadingSurrogateMin + ((cp >> 10) & 0x3ff);
+        out[1] = trailingSurrogateMin + (cp & 0x3ff);
+        return 2;
+    }
+
+    out[0] = replacementCharacter;
+    return 1;
+}
+
 
 }

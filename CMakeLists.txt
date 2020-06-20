@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(dpFontBaker)
 
-option(DPFB_USE_CORETEXT "Include CoreText renderer" OFF)
+option(DPFB_USE_CORE_TEXT "Include Core Text renderer (macOS)" OFF)
 option(DPFB_USE_FREETYPE "Include FreeType renderer" ON)
 option(DPFB_USE_STBTT "Include stb_truetype.h renderer" ON)
 option(DPFB_USE_LIBPNG "Enable PNG support" ON)
@@ -54,7 +54,7 @@ endif()
 target_compile_definitions(
     dpfb
     PRIVATE
-    DPFB_USE_CORETEXT=$<BOOL:${DPFB_USE_CORETEXT}>
+    DPFB_USE_CORE_TEXT=$<BOOL:${DPFB_USE_CORE_TEXT}>
     DPFB_USE_FREETYPE=$<BOOL:${DPFB_USE_FREETYPE}>
     DPFB_USE_STBTT=$<BOOL:${DPFB_USE_STBTT}>
     DPFB_USE_LIBPNG=$<BOOL:${DPFB_USE_LIBPNG}>
@@ -91,10 +91,13 @@ if (DPFB_USE_LIBPNG)
     target_link_libraries(dpfb ${PNG_LIBRARIES})
 endif()
 
-if (DPFB_USE_CORETEXT)
-    target_link_libraries(dpfb "-framework CoreText")
-    target_link_libraries(dpfb "-framework CoreGraphics")
-    target_link_libraries(dpfb "-framework CoreFoundation")
+if (DPFB_USE_CORE_TEXT)
+    target_link_libraries(
+        dpfb
+        "-framework CoreText"
+        "-framework CoreGraphics"
+        "-framework CoreFoundation"
+    )
 endif()
 
 if (DPFB_BUILD_TESTS)
