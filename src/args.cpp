@@ -122,9 +122,9 @@ const char* help = (
     "  both  extract pairs from both \"kern\" and \"GPOS\" tables\n"
     "\n"
     "Image size modes (-image-size-mode):\n"
-    "  min     use minimal image size\n"
-    "  minPot  use minimal power of two image size <= -image-max-size\n"
-    "  max     force all images to -image-max-size\n"
+    "  min      use minimal image size\n"
+    "  min-pot  use minimal power of two image size <= -image-max-size\n"
+    "  max      force all images to -image-max-size\n"
     "\n"
 );
 

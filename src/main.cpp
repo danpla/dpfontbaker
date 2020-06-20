@@ -169,7 +169,7 @@ static ExportOptions createExportOpions()
     ImageSizeMode imageSizeMode;
     if (std::strcmp(args::imageSizeMode, "min") == 0)
         imageSizeMode = ImageSizeMode::min;
-    else if (std::strcmp(args::imageSizeMode, "minPot") == 0)
+    else if (std::strcmp(args::imageSizeMode, "min-pot") == 0)
         imageSizeMode = ImageSizeMode::minPot;
     else if (std::strcmp(args::imageSizeMode, "max") == 0)
         imageSizeMode = ImageSizeMode::max;
