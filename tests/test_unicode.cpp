@@ -169,10 +169,10 @@ TEST_CASE("encodeUtf16", "[unicode]") {
         {1,         u"\1"},
         {'a',       u"a"},
         {0x9999,    u"\u9999"},
-        {0x10000, 	u"\xd800\xdc00"},
-        {0x10e6d, 	u"\xd803\xde6d"},
-        {0x1d11e, 	u"\xd834\xdd1e"},
-        {0x10ffff, 	u"\xdbff\xdfff"},
+        {0x10000,   u"\xd800\xdc00"},
+        {0x10e6d,   u"\xd803\xde6d"},
+        {0x1d11e,   u"\xd834\xdd1e"},
+        {0x10ffff,  u"\xdbff\xdfff"},
         {0x1111111, u"\ufffd"},
     };
 
