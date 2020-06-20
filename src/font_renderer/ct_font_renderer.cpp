@@ -90,7 +90,7 @@ dpfb::GlyphIndex CoreTextFontRenderer::getGlyphIndex(char32_t cp) const
 }
 
 
-const auto extraPaddingForAntialiasing = 0;
+const auto extraPaddingForAntialiasing = 1;
 
 
 dpfb::GlyphMetrics CoreTextFontRenderer::getGlyphMetrics(
