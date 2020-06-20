@@ -4,7 +4,7 @@
 #include "byteorder.h"
 
 
-using namespace byteorder;
+using namespace dpfb::byteorder;
 
 
 TEST_CASE("swap", "[byteorder]") {

@@ -7,7 +7,7 @@
 #include "unicode.h"
 
 
-using namespace unicode;
+using namespace dpfb::unicode;
 
 
 TEST_CASE("cpToStr", "[unicode]") {

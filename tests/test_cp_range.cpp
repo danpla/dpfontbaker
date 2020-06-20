@@ -7,6 +7,7 @@
 #include "unicode.h"
 
 
+namespace dpfb{
 namespace cp_range {
 
 
@@ -16,10 +17,11 @@ static std::ostream& operator<<(std::ostream& os, const CpRange& cpr) {
 
 
 }
+}
 
 
 TEST_CASE("cp_range::compress") {
-    using namespace cp_range;
+    using namespace dpfb::cp_range;
 
     struct Test {
         CpRangeList list;
@@ -52,7 +54,7 @@ TEST_CASE("cp_range::compress") {
 
 
 TEST_CASE("cp_range::parse") {
-    using namespace cp_range;
+    using namespace dpfb::cp_range;
 
     // U+ format
     REQUIRE(parse("U+1234") == CpRangeList({CpRange(0x1234, 0x1234)}));

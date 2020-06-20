@@ -8,7 +8,7 @@
 #include "streams/file_stream.h"
 
 
-using namespace streams;
+using namespace dpfb::streams;
 
 
 const char testBuf[] =

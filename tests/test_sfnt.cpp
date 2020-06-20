@@ -16,6 +16,9 @@
 #include "utils.h"
 
 
+namespace dpfb {
+
+
 TEST_CASE("sfntTagToStr", "[sfnt]") {
     REQUIRE(
         std::strcmp(
@@ -165,4 +168,7 @@ TEST_CASE("SfntOffsetTable", "[sfnt]") {
         REQUIRE_THROWS_AS(
             SfntOffsetTable(fontStream, fontIdx), StreamError);
     }
+}
+
+
 }

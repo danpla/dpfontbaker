@@ -18,6 +18,9 @@
 #include "utils.h"
 
 
+namespace dpfb {
+
+
 struct Test {
     std::string name;
     KerningSource kerningSource;
@@ -304,4 +307,7 @@ TEST_CASE("Kerning", "[kerning]") {
             }
         }
     }
+}
+
+
 }
