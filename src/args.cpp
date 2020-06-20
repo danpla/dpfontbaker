@@ -299,11 +299,11 @@ void parse(int argc, char* argv[])
 {
     pickDefaultPlugin<FontRendererCreator>(
         fontRenderer,
-        "All font renderers was disabled at compile time\n");
+        "All font renderers were disabled at compile time\n");
 
     pickDefaultPlugin<ImageWriter>(
         fontRenderer,
-        "All image writers was disabled at compile time\n");
+        "All image writers were disabled at compile time\n");
 
     for (int i = 1; i < argc; ++i)
         if (std::strcmp(argv[i], "-help") == 0) {
