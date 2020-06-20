@@ -138,7 +138,7 @@ def render_text(
         draw_pos = (
             x + glyph['drawOffset']['x'], y + glyph['drawOffset']['y']
         )
-        image.paste(glyph_image, draw_pos)
+        image.paste(glyph_image, draw_pos, glyph_image)
 
         x += glyph['advance']
 
