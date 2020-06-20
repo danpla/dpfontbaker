@@ -10,6 +10,7 @@
 #include "unicode.h"
 
 
+namespace dpfb {
 namespace cp_range {
 
 
@@ -146,4 +147,5 @@ void compress(CpRangeList& cpRangeList)
 }
 
 
+}
 }

@@ -3,15 +3,15 @@
 #include "str.h"
 
 
-class PgmImageWriter : public ImageWriter {
+class PgmImageWriter : public dpfb::ImageWriter {
 public:
     PgmImageWriter();
 
     const char* getDescription() const override;
 
     void write(
-        streams::Stream& stream,
-        const Image& image) const override;
+        dpfb::streams::Stream& stream,
+        const dpfb::Image& image) const override;
 };
 
 
@@ -29,10 +29,10 @@ const char* PgmImageWriter::getDescription() const
 
 
 void PgmImageWriter::write(
-    streams::Stream& stream, const Image& image) const
+    dpfb::streams::Stream& stream, const dpfb::Image& image) const
 {
     stream.writeStr(
-        str::format(
+        dpfb::str::format(
             "P5\n%i %i\n255\n",
             image.getWidth(), image.getHeight()));
     for (int y = 0; y < image.getHeight(); ++y)

@@ -7,6 +7,9 @@
 #include "streams/stream.h"
 
 
+namespace dpfb {
+
+
 class ImageWriterError : public std::runtime_error {
 public:
     using runtime_error::runtime_error;
@@ -46,3 +49,6 @@ private:
 
     static const ImageWriter* find(const char* name);
 };
+
+
+}

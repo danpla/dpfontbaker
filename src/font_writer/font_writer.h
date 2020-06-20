@@ -7,6 +7,9 @@
 #include "image_name_formatter.h"
 
 
+namespace dpfb {
+
+
 class FontWriterError : public std::runtime_error {
 public:
     using runtime_error::runtime_error;
@@ -44,3 +47,6 @@ private:
 
     static const FontWriter* find(const char* name);
 };
+
+
+}

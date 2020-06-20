@@ -13,33 +13,35 @@
 #include "font_renderer/font_renderer.h"
 
 
-class StbFontRenderer : public FontRenderer {
+class StbFontRenderer : public dpfb::FontRenderer {
 public:
-    explicit StbFontRenderer(const FontRendererArgs& args);
+    explicit StbFontRenderer(const dpfb::FontRendererArgs& args);
 
-    FontMetrics getFontMetrics() const override;
+    dpfb::FontMetrics getFontMetrics() const override;
 
-    GlyphIndex getGlyphIndex(char32_t cp) const override;
-    GlyphMetrics getGlyphMetrics(GlyphIndex glyphIdx) const override;
-    void renderGlyph(GlyphIndex glyphIdx, Image& image) const override;
+    dpfb::GlyphIndex getGlyphIndex(char32_t cp) const override;
+    dpfb::GlyphMetrics getGlyphMetrics(
+        dpfb::GlyphIndex glyphIdx) const override;
+    void renderGlyph(
+        dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const override;
 private:
     stbtt_fontinfo font;
     float scale;
 };
 
 
-StbFontRenderer::StbFontRenderer(const FontRendererArgs& args)
+StbFontRenderer::StbFontRenderer(const dpfb::FontRendererArgs& args)
 {
     if (!stbtt_InitFont(&font, args.data, 0))
-        throw FontRendererError("stbtt can't init font");
+        throw dpfb::FontRendererError("stbtt can't init font");
 
     scale = stbtt_ScaleForMappingEmToPixels(&font, args.pxSize);
 }
 
 
-FontMetrics StbFontRenderer::getFontMetrics() const
+dpfb::FontMetrics StbFontRenderer::getFontMetrics() const
 {
-    FontMetrics metrics;
+    dpfb::FontMetrics metrics;
 
     int lineGap;
     // First try "hhea" table
@@ -63,15 +65,16 @@ FontMetrics StbFontRenderer::getFontMetrics() const
 }
 
 
-GlyphIndex StbFontRenderer::getGlyphIndex(char32_t cp) const
+dpfb::GlyphIndex StbFontRenderer::getGlyphIndex(char32_t cp) const
 {
     return stbtt_FindGlyphIndex(&font, cp);
 }
 
 
-GlyphMetrics StbFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
+dpfb::GlyphMetrics StbFontRenderer::getGlyphMetrics(
+    dpfb::GlyphIndex glyphIdx) const
 {
-    GlyphMetrics glyphMetrics;
+    dpfb::GlyphMetrics glyphMetrics;
 
     stbtt_GetGlyphHMetrics(
         &font, glyphIdx, &glyphMetrics.advance, nullptr);
@@ -94,7 +97,8 @@ GlyphMetrics StbFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
 }
 
 
-void StbFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
+void StbFontRenderer::renderGlyph(
+    dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const
 {
     stbtt_MakeGlyphBitmap(
         &font,
@@ -106,7 +110,7 @@ void StbFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
 }
 
 
-class StbFontRendererCreator : public FontRendererCreator {
+class StbFontRendererCreator : public dpfb::FontRendererCreator {
 public:
     StbFontRendererCreator()
         : FontRendererCreator("stb")
@@ -126,7 +130,8 @@ public:
             "(https://github.com/nothings/stb)");
     }
 
-    FontRenderer* create(const FontRendererArgs& args) const override
+    dpfb::FontRenderer* create(
+        const dpfb::FontRendererArgs& args) const override
     {
         return new StbFontRenderer(args);
     }

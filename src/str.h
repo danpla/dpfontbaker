@@ -4,6 +4,7 @@
 #include <string>
 
 
+namespace dpfb {
 namespace str {
 
 
@@ -13,4 +14,5 @@ std::string format(const char* fmt, ...)
     #endif
 
 
+}
 }

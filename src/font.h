@@ -14,6 +14,9 @@
 #include "streams/const_mem_stream.h"
 
 
+namespace dpfb {
+
+
 enum class KerningSource {
     none,
     kern,
@@ -29,10 +32,10 @@ struct FontBakingOptions {
     int fontPxSize;
     Hinting hinting;
     int imageMaxSize;
-    Geometry::Edge imagePadding;
-    Geometry::Edge glyphPaddingInner;
-    Geometry::Edge glyphPaddingOuter;
-    Geometry::Point glyphSpacing;
+    Edge imagePadding;
+    Edge glyphPaddingInner;
+    Edge glyphPaddingOuter;
+    Point glyphSpacing;
     KerningSource kerningSource;
 };
 
@@ -69,7 +72,7 @@ struct StyleFlags {
 
 
 struct Page {
-    Geometry::Size size;
+    Size size;
     std::vector<std::uint_least32_t> glyphIndices;
 };
 
@@ -77,11 +80,11 @@ struct Page {
 struct Glyph {
     char32_t cp;
     GlyphIndex glyphIdx;
-    Geometry::Size size;
-    Geometry::Point drawOffset;
+    Size size;
+    Point drawOffset;
     int advance;
     std::uint_least32_t pageIdx;
-    Geometry::Point pagePos;
+    Point pagePos;
 };
 
 
@@ -178,3 +181,6 @@ private:
     char32_t glyphIdxToCp(GlyphIndex glyphIdx) const;
     void readKerningPairs();
 };
+
+
+}

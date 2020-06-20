@@ -2,6 +2,7 @@
 #pragma once
 
 
+namespace dpfb {
 namespace args {
 
 
@@ -30,4 +31,5 @@ extern const char* outDir;
 void parse(int argc, char* argv[]);
 
 
+}
 }

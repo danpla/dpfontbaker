@@ -5,6 +5,9 @@
 #include <string>
 
 
+namespace dpfb {
+
+
 class ImageNameFormatter {
 public:
     ImageNameFormatter(
@@ -18,3 +21,6 @@ private:
     int numDigits;
     std::string extension;
 };
+
+
+}

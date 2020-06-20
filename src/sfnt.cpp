@@ -6,6 +6,9 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 const char* sfntTagToStr(std::uint32_t tag)
 {
     static char buf[5];
@@ -116,3 +119,5 @@ std::uint32_t SfntOffsetTable::getTableOffset(std::uint32_t tag) const
     return 0;
 }
 
+
+}

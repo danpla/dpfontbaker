@@ -7,6 +7,7 @@
 #include "unicode.h"
 
 
+namespace dpfb {
 namespace cp_range {
 
 
@@ -82,4 +83,5 @@ CpRangeList parse(const char* str);
 void compress(CpRangeList& cpRangeList);
 
 
+}
 }

@@ -5,6 +5,9 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 bool FontRenderer::exists(const char* name)
 {
     return FontRendererCreator::find(name);
@@ -53,4 +56,7 @@ FontRendererCreator::FontRendererCreator(const char* name)
 const char* FontRendererCreator::getName() const
 {
     return name;
+}
+
+
 }

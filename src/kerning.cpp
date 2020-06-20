@@ -9,6 +9,9 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 static float getScale(const KerningParams& params)
 {
     return static_cast<float>(params.pxSize) / params.pxPerEm;
@@ -671,4 +674,7 @@ std::vector<RawKerningPair> readKerningPairsGpos(
         stream, tableOffset + lookupListOffset, ctx, lookupIndices);
 
     return std::move(ctx.kerningPairs);
+}
+
+
 }

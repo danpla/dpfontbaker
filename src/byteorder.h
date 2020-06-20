@@ -10,6 +10,7 @@
 #include <cstdint>
 
 
+namespace dpfb {
 namespace byteorder {
 
 
@@ -92,4 +93,5 @@ inline T fromBe(T t)
 }
 
 
+}
 }

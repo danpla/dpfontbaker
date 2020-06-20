@@ -5,6 +5,9 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 bool FontWriter::exists(const char* name)
 {
     return find(name);
@@ -59,5 +62,8 @@ const char* FontWriter::getFileExtension() const
 const FontWriter* FontWriter::find(const char* name)
 {
     return findPlugin<FontWriter>(name);
+}
+
+
 }
 

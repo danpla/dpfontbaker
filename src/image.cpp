@@ -5,6 +5,9 @@
 #include <stdexcept>
 
 
+namespace dpfb {
+
+
 Image::Image(std::uint8_t* data, int w, int h, int pitch)
     : w {w}
     , h {h}
@@ -64,4 +67,7 @@ std::uint8_t* Image::getData()
 const std::uint8_t* Image::getData() const
 {
     return data;
+}
+
+
 }

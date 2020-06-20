@@ -6,6 +6,7 @@
 #include <utility>
 
 
+namespace dpfb {
 namespace streams {
 
 
@@ -129,4 +130,5 @@ std::int64_t FileStream::getPosition() const
 }
 
 
+}
 }

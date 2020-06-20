@@ -7,6 +7,7 @@
 #include <cinttypes>
 
 
+namespace dpfb {
 namespace unicode {
 
 
@@ -223,4 +224,5 @@ int encodeUtf16(char32_t cp, char16_t out[2])
 }
 
 
+}
 }

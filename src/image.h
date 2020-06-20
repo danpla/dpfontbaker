@@ -5,6 +5,9 @@
 #include <vector>
 
 
+namespace dpfb {
+
+
 class Image {
 public:
     Image(std::uint8_t* data, int w, int h, int pitch);
@@ -23,3 +26,6 @@ private:
     std::uint8_t* data;
     std::vector<std::uint8_t> ownData;
 };
+
+
+}

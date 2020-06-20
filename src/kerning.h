@@ -7,6 +7,9 @@
 #include "streams/stream.h"
 
 
+namespace dpfb {
+
+
 struct RawKerningPair {
     std::uint16_t glyphIdx1;
     std::uint16_t glyphIdx2;
@@ -30,3 +33,7 @@ std::vector<RawKerningPair> readKerningPairsGpos(
     streams::Stream& stream,
     const SfntOffsetTable& sfntOffsetTable,
     const KerningParams& params);
+
+
+}
+

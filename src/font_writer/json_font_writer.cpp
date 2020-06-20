@@ -13,16 +13,16 @@
 //   https://www.freeformatter.com/json-validator.html
 
 
-class JsonFontWriter : public FontWriter {
+class JsonFontWriter : public dpfb::FontWriter {
 public:
     JsonFontWriter();
 
     const char* getDescription() const override;
 
     void write(
-        streams::Stream& stream,
-        const Font& font,
-        const ImageNameFormatter& imageNameFormatter) const override;
+        dpfb::streams::Stream& stream,
+        const dpfb::Font& font,
+        const dpfb::ImageNameFormatter& imageNameFormatter) const override;
 };
 
 
@@ -46,14 +46,14 @@ static const char* jsonBool(bool v)
 
 
 void JsonFontWriter::write(
-    streams::Stream& stream,
-    const Font& font,
-    const ImageNameFormatter& imageNameFormatter) const
+    dpfb::streams::Stream& stream,
+    const dpfb::Font& font,
+    const dpfb::ImageNameFormatter& imageNameFormatter) const
 {
     stream.writeStr("{\n");
 
     const auto& name = font.getFontName();
-    stream.writeStr(str::format(
+    stream.writeStr(dpfb::str::format(
         "  \"name\": {\n"
         "    \"family\": \"%s\",\n"
         "    \"style\": \"%s\",\n"
@@ -64,7 +64,7 @@ void JsonFontWriter::write(
         name.groupFamily.c_str()));
 
     const auto styleFlags = font.getStyleFlags();
-    stream.writeStr(str::format(
+    stream.writeStr(dpfb::str::format(
         "  \"styleFlags\": {\n"
         "    \"bold\": %s,\n"
         "    \"italic\": %s\n"
@@ -73,7 +73,7 @@ void JsonFontWriter::write(
         jsonBool(styleFlags.italic)));
 
     const auto metrics = font.getFontMetrics();
-    stream.writeStr(str::format(
+    stream.writeStr(dpfb::str::format(
         "  \"metrics\": {\n"
         "    \"ascender\": %i,\n"
         "    \"descender\": %i,\n"
@@ -84,7 +84,7 @@ void JsonFontWriter::write(
         metrics.lineHeight));
 
     const auto& bakingOptions = font.getBakingOptions();
-    stream.writeStr(str::format(
+    stream.writeStr(dpfb::str::format(
         "  \"bakingOptions\": {\n"
         "    \"fontPxSize\": %i,\n"
         "    \"imageMaxSize\": %i,\n"
@@ -133,7 +133,7 @@ void JsonFontWriter::write(
     const auto& pages = font.getPages();
     for (std::size_t i = 0; i < pages.size(); ++i) {
         const auto& page = pages[i];
-        stream.writeStr(str::format(
+        stream.writeStr(dpfb::str::format(
             "    {\n"
             "      \"name\": \"%s\",\n"
             "      \"size\": {\n"
@@ -154,7 +154,7 @@ void JsonFontWriter::write(
     const auto& glyphs = font.getGlyphs();
     for (std::size_t i = 0; i < glyphs.size(); ++i) {
         const auto& glyph = glyphs[i];
-        stream.writeStr(str::format(
+        stream.writeStr(dpfb::str::format(
             "    {\n"
             "      \"codePoint\": %" PRIuLEAST32 ",\n"
             "      \"size\": {\n"
@@ -191,7 +191,7 @@ void JsonFontWriter::write(
     const auto& kerningPairs = font.getKerningPairs();
     for (std::size_t i = 0; i < kerningPairs.size(); ++i) {
         const auto& kp = kerningPairs[i];
-        stream.writeStr(str::format(
+        stream.writeStr(dpfb::str::format(
             "    {\n"
             "      \"codePoint1\": %" PRIuLEAST32 ",\n"
             "      \"codePoint2\": %" PRIuLEAST32 ",\n"

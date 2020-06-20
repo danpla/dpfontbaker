@@ -6,8 +6,11 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 template<typename T>
-static int numDigits(T i)
+static int getNumDigits(T i)
 {
     assert(i >= 0);
 
@@ -23,7 +26,7 @@ ImageNameFormatter::ImageNameFormatter(
         std::size_t numImages,
         const std::string& extension)
     : prefix {prefix}
-    , numDigits {::numDigits(numImages)}
+    , numDigits {getNumDigits(numImages)}
     , extension {extension}
 {
 
@@ -41,4 +44,7 @@ std::string ImageNameFormatter::getImageName(std::size_t imageIdx) const
     result += extension;
 
     return result;
+}
+
+
 }

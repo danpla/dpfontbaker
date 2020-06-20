@@ -4,6 +4,7 @@
 #include "streams/stream.h"
 
 
+namespace dpfb {
 namespace streams {
 
 
@@ -28,4 +29,5 @@ private:
 };
 
 
+}
 }

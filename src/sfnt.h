@@ -7,6 +7,9 @@
 #include "streams/stream.h"
 
 
+namespace dpfb {
+
+
 constexpr std::uint32_t sfntTag(char c1, char c2, char c3, char c4)
 {
     return (
@@ -36,3 +39,6 @@ private:
 
     std::vector<TableRecord> tableRecords;
 };
+
+
+}

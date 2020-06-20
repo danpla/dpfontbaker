@@ -4,6 +4,7 @@
 #include <string>
 
 
+namespace dpfb {
 namespace unicode {
 
 
@@ -53,4 +54,5 @@ std::string utf16ToUtf8(const char16_t* begin, const char16_t* end);
 int encodeUtf16(char32_t cp, char16_t out[2]);
 
 
+}
 }

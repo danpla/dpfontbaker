@@ -5,6 +5,9 @@
 #include "str.h"
 
 
+namespace dpfb {
+
+
 bool ImageWriter::exists(const char* name)
 {
     return find(name);
@@ -59,4 +62,7 @@ const char* ImageWriter::getFileExtension() const
 const ImageWriter* ImageWriter::find(const char* name)
 {
     return findPlugin<ImageWriter>(name);
+}
+
+
 }

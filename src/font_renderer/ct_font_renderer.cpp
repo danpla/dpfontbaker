@@ -12,39 +12,46 @@
 #include "unicode.h"
 
 
-class CoreTextFontRenderer : public FontRenderer {
+class CoreTextFontRenderer : public dpfb::FontRenderer {
 public:
-    explicit CoreTextFontRenderer(const FontRendererArgs& args);
+    explicit CoreTextFontRenderer(const dpfb::FontRendererArgs& args);
     ~CoreTextFontRenderer();
 
-    FontMetrics getFontMetrics() const override;
+    dpfb::FontMetrics getFontMetrics() const override;
 
-    GlyphIndex getGlyphIndex(char32_t cp) const override;
-    GlyphMetrics getGlyphMetrics(GlyphIndex glyphIdx) const override;
-    void renderGlyph(GlyphIndex glyphIdx, Image& image) const override;
+    dpfb::GlyphIndex getGlyphIndex(char32_t cp) const override;
+    dpfb::GlyphMetrics getGlyphMetrics(
+        dpfb::GlyphIndex glyphIdx) const override;
+    void renderGlyph(
+        dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const override;
 private:
     CTFontRef font;
 };
 
 
-CoreTextFontRenderer::CoreTextFontRenderer(const FontRendererArgs& args)
+CoreTextFontRenderer::CoreTextFontRenderer(
+    const dpfb::FontRendererArgs& args)
 {
     const auto data = CFDataCreate(nullptr, args.data, args.dataSize);
     if (!data)
-        throw FontRendererError("CFDataCreate for font data failed");
+        throw dpfb::FontRendererError(
+            "CFDataCreate for font data failed");
 
-    const auto descriptor = CTFontManagerCreateFontDescriptorFromData(data);
+    const auto descriptor = CTFontManagerCreateFontDescriptorFromData(
+        data);
     CFRelease(data);
 
     if (!descriptor)
-        throw FontRendererError(
+        throw dpfb::FontRendererError(
             "CTFontManagerCreateFontDescriptorFromData failed");
 
-    font = CTFontCreateWithFontDescriptor(descriptor, args.pxSize, nullptr);
+    font = CTFontCreateWithFontDescriptor(
+        descriptor, args.pxSize, nullptr);
     CFRelease(descriptor);
 
     if (!font)
-        throw FontRendererError("CTFontCreateWithFontDescriptor failed");
+        throw dpfb::FontRendererError(
+            "CTFontCreateWithFontDescriptor failed");
 }
 
 
@@ -54,9 +61,9 @@ CoreTextFontRenderer::~CoreTextFontRenderer()
 }
 
 
-FontMetrics CoreTextFontRenderer::getFontMetrics() const
+dpfb::FontMetrics CoreTextFontRenderer::getFontMetrics() const
 {
-    FontMetrics metrics;
+    dpfb::FontMetrics metrics;
 
     metrics.ascender = CTFontGetAscent(font);
     metrics.descender = -CTFontGetDescent(font);
@@ -67,10 +74,10 @@ FontMetrics CoreTextFontRenderer::getFontMetrics() const
 }
 
 
-GlyphIndex CoreTextFontRenderer::getGlyphIndex(char32_t cp) const
+dpfb::GlyphIndex CoreTextFontRenderer::getGlyphIndex(char32_t cp) const
 {
     char16_t utf16[2];
-    const auto numUtf16Chars = unicode::encodeUtf16(cp, utf16);
+    const auto numUtf16Chars = dpfb::unicode::encodeUtf16(cp, utf16);
 
     UniChar uniChars[2] = {
         static_cast<UniChar>(utf16[0]), static_cast<UniChar>(utf16[1])
@@ -86,9 +93,10 @@ GlyphIndex CoreTextFontRenderer::getGlyphIndex(char32_t cp) const
 const auto extraPaddingForAntialiasing = 0;
 
 
-GlyphMetrics CoreTextFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
+dpfb::GlyphMetrics CoreTextFontRenderer::getGlyphMetrics(
+    dpfb::GlyphIndex glyphIdx) const
 {
-    GlyphMetrics glyphMetrics;
+    dpfb::GlyphMetrics glyphMetrics;
     const CGGlyph glyph = glyphIdx;
 
     CGSize advance;
@@ -116,7 +124,8 @@ GlyphMetrics CoreTextFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
 }
 
 
-void CoreTextFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
+void CoreTextFontRenderer::renderGlyph(
+    dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const
 {
     // CGBitmapContextCreate() doesn't expect zero size.
     if (image.getWidth() == 0 || image.getHeight() == 0)
@@ -124,7 +133,8 @@ void CoreTextFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
 
     const auto colorSpace = CGColorSpaceCreateDeviceGray();
     if (!colorSpace)
-        throw FontRendererError("CGColorSpaceCreateDeviceGray failed");
+        throw dpfb::FontRendererError(
+            "CGColorSpaceCreateDeviceGray failed");
 
     const auto context = CGBitmapContextCreate(
         image.getData(), image.getWidth(), image.getHeight(),
@@ -132,7 +142,7 @@ void CoreTextFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
     CFRelease(colorSpace);
 
     if (!context)
-        throw FontRendererError("CGBitmapContextCreate failed");
+        throw dpfb::FontRendererError("CGBitmapContextCreate failed");
 
     CGContextSetFillColorWithColor(
         context, CGColorGetConstantColor(kCGColorWhite));
@@ -153,7 +163,7 @@ void CoreTextFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
 }
 
 
-class CoreTextFontRendererCreator : public FontRendererCreator {
+class CoreTextFontRendererCreator : public dpfb::FontRendererCreator {
 public:
     CoreTextFontRendererCreator()
         : FontRendererCreator("core-text")
@@ -166,7 +176,8 @@ public:
         return "Core Text (macOS)";
     }
 
-    FontRenderer* create(const FontRendererArgs& args) const override
+    dpfb::FontRenderer* create(
+        const dpfb::FontRendererArgs& args) const override
     {
         return new CoreTextFontRenderer(args);
     }

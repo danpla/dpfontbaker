@@ -4,6 +4,7 @@
 #include <cstring>
 
 
+namespace dpfb {
 namespace streams {
 
 
@@ -33,4 +34,5 @@ std::size_t Stream::writeStr(const std::string& str) noexcept
 }
 
 
+}
 }

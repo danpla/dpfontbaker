@@ -14,6 +14,7 @@
 #include "version.h"
 
 
+namespace dpfb {
 namespace args {
 
 
@@ -351,4 +352,5 @@ void parse(int argc, char* argv[])
 }
 
 
+}
 }

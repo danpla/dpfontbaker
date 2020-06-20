@@ -4,6 +4,7 @@
 #include <cstring>
 
 
+namespace dpfb {
 namespace streams {
 
 
@@ -83,4 +84,5 @@ std::int64_t ConstMemStream::getPosition() const
 }
 
 
+}
 }

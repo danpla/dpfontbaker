@@ -10,15 +10,15 @@
 #include "image_writer/image_writer.h"
 
 
-class PngImageWriter : public ImageWriter {
+class PngImageWriter : public dpfb::ImageWriter {
 public:
     PngImageWriter();
 
     const char* getDescription() const override;
 
     void write(
-        streams::Stream& stream,
-        const Image& image) const override;
+        dpfb::streams::Stream& stream,
+        const dpfb::Image& image) const override;
 };
 
 
@@ -51,7 +51,7 @@ static void warningFn(png_structp png_ptr, png_const_charp warning_msg)
 
 static void writeFn(png_structp png_ptr, png_bytep data, png_size_t size)
 {
-    auto* stream = static_cast<streams::Stream*>(png_get_io_ptr(png_ptr));
+    auto* stream = static_cast<dpfb::streams::Stream*>(png_get_io_ptr(png_ptr));
     stream->write(data, size);
 }
 
@@ -63,7 +63,7 @@ static void flushFn(png_structp png_ptr)
 
 
 void PngImageWriter::write(
-    streams::Stream& stream, const Image& image) const
+    dpfb::streams::Stream& stream, const dpfb::Image& image) const
 {
     png_structp png_ptr;
     png_infop info_ptr;
@@ -81,17 +81,17 @@ void PngImageWriter::write(
     png_ptr = png_create_write_struct(
         PNG_LIBPNG_VER_STRING, &data->errorStr, errorFn, warningFn);
     if (!png_ptr)
-        throw ImageWriterError("libpng can't create write struct");
+        throw dpfb::ImageWriterError("libpng can't create write struct");
 
     info_ptr = png_create_info_struct(png_ptr);
     if (!info_ptr) {
         png_destroy_write_struct(&png_ptr, nullptr);
-        throw ImageWriterError("libpng can't create info struct");
+        throw dpfb::ImageWriterError("libpng can't create info struct");
     }
 
     if (setjmp(png_jmpbuf(png_ptr))) {
         png_destroy_write_struct(&png_ptr, &info_ptr);
-        throw ImageWriterError(data->errorStr);
+        throw dpfb::ImageWriterError(data->errorStr);
     }
 
     png_set_write_fn(png_ptr, &stream, writeFn, flushFn);

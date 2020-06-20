@@ -18,7 +18,10 @@
 #include "streams/file_stream.h"
 #include "unicode.h"
 
-using namespace Geometry;
+
+
+namespace dpfb {
+
 
 const char* const dirSeparators = (
     #ifdef _WIN32
@@ -358,15 +361,18 @@ static void bake()
 }
 
 
+}
+
+
 int main(int argc, char* argv[])
 {
-    args::parse(argc, argv);
+    dpfb::args::parse(argc, argv);
 
     try {
-        bake();
+        dpfb::bake();
     } catch (std::runtime_error& e) {
         std::fprintf(
-            stderr, "Can't bake %s: %s\n", args::fontPath, e.what());
+            stderr, "Can't bake %s: %s\n", dpfb::args::fontPath, e.what());
         return EXIT_FAILURE;
     }
 

@@ -6,6 +6,9 @@
 #include <cstring>
 
 
+namespace dpfb {
+
+
 #define LINK_PLUGIN(T) \
     if (find(getName())) { \
         std::fprintf( \
@@ -29,4 +32,7 @@ inline const T* findPlugin(const char* name)
             return p;
 
     return nullptr;
+}
+
+
 }

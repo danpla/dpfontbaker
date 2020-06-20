@@ -5,6 +5,7 @@
 #include <cstdarg>
 
 
+namespace dpfb {
 namespace str {
 
 
@@ -32,4 +33,5 @@ std::string format(const char* fmt, ...)
 }
 
 
+}
 }

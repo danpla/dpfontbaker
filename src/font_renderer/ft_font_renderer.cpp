@@ -50,7 +50,8 @@ static std::string ftErrorToStr(FT_Error err)
             return "Invalid argument";
             break;
         default:
-            return str::format("FreeType error 0x%02x (see fterrdef.h)", err);
+            return dpfb::str::format(
+                "FreeType error 0x%02x (see fterrdef.h)", err);
             break;
     }
 }
@@ -68,7 +69,7 @@ static void refLib()
 
     auto err = FT_Init_FreeType(&library);
     if (err != FT_Err_Ok)
-        throw FontRendererError(
+        throw dpfb::FontRendererError(
             "Error initializing FreeType: " + ftErrorToStr(err));
 }
 
@@ -82,23 +83,25 @@ static void unrefLib()
 }
 
 
-class FtFontRenderer : public FontRenderer {
+class FtFontRenderer : public dpfb::FontRenderer {
 public:
-    explicit FtFontRenderer(const FontRendererArgs& args);
+    explicit FtFontRenderer(const dpfb::FontRendererArgs& args);
     ~FtFontRenderer();
 
-    FontMetrics getFontMetrics() const override;
+    dpfb::FontMetrics getFontMetrics() const override;
 
-    GlyphIndex getGlyphIndex(char32_t cp) const override;
-    GlyphMetrics getGlyphMetrics(GlyphIndex glyphIdx) const override;
-    void renderGlyph(GlyphIndex glyphIdx, Image& image) const override;
+    dpfb::GlyphIndex getGlyphIndex(char32_t cp) const override;
+    dpfb::GlyphMetrics getGlyphMetrics(
+        dpfb::GlyphIndex glyphIdx) const override;
+    void renderGlyph(
+        dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const override;
 private:
     FT_Face face;
     FT_UInt loadFlags;
 };
 
 
-FtFontRenderer::FtFontRenderer(const FontRendererArgs& args)
+FtFontRenderer::FtFontRenderer(const dpfb::FontRendererArgs& args)
 {
     refLib();
 
@@ -106,26 +109,27 @@ FtFontRenderer::FtFontRenderer(const FontRendererArgs& args)
         library, args.data, args.dataSize, 0, &face);
     if (err != FT_Err_Ok) {
         unrefLib();
-        throw FontRendererError(
-            str::format(
+        throw dpfb::FontRendererError(
+            dpfb::str::format(
                 "Can't open font: %s", ftErrorToStr(err).c_str()));
     }
 
     if (!face->charmap) {
         FT_Done_Face(face);
         unrefLib();
-        throw FontRendererError("Font doesn't contain Unicode charmap");
+        throw dpfb::FontRendererError(
+            "Font doesn't contain Unicode charmap");
     }
 
     err = FT_Set_Char_Size(face, args.pxSize * 64, 0, 72, 0);
     if (err != FT_Err_Ok) {
         FT_Done_Face(face);
         unrefLib();
-        throw FontRendererError(ftErrorToStr(err));
+        throw dpfb::FontRendererError(ftErrorToStr(err));
     }
 
     loadFlags = FT_LOAD_DEFAULT;
-    if (args.hinting == Hinting::light)
+    if (args.hinting == dpfb::Hinting::light)
         loadFlags |= FT_LOAD_TARGET_LIGHT;
 }
 
@@ -137,9 +141,9 @@ FtFontRenderer::~FtFontRenderer()
 }
 
 
-FontMetrics FtFontRenderer::getFontMetrics() const
+dpfb::FontMetrics FtFontRenderer::getFontMetrics() const
 {
-    FontMetrics metrics;
+    dpfb::FontMetrics metrics;
     metrics.ascender = face->size->metrics.ascender >> 6;
     metrics.descender = face->size->metrics.descender >> 6;
     metrics.lineHeight = face->size->metrics.height >> 6;
@@ -147,13 +151,13 @@ FontMetrics FtFontRenderer::getFontMetrics() const
 }
 
 
-GlyphIndex FtFontRenderer::getGlyphIndex(char32_t cp) const
+dpfb::GlyphIndex FtFontRenderer::getGlyphIndex(char32_t cp) const
 {
     return FT_Get_Char_Index(face, cp);
 }
 
 
-static char32_t idxToCp(FT_Face face, GlyphIndex idx)
+static char32_t idxToCp(FT_Face face, dpfb::GlyphIndex idx)
 {
     FT_ULong cp;
     FT_UInt gidx;
@@ -170,17 +174,18 @@ static char32_t idxToCp(FT_Face face, GlyphIndex idx)
 }
 
 
-GlyphMetrics FtFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
+dpfb::GlyphMetrics FtFontRenderer::getGlyphMetrics(
+    dpfb::GlyphIndex glyphIdx) const
 {
     auto err = FT_Load_Glyph(face, glyphIdx, loadFlags);
     if (err != FT_Err_Ok)
-        throw FontRendererError(
-            str::format(
+        throw dpfb::FontRendererError(
+            dpfb::str::format(
                 "Can't load glyph for %s: %s",
-                unicode::cpToStr(idxToCp(face, glyphIdx)),
+                dpfb::unicode::cpToStr(idxToCp(face, glyphIdx)),
                 ftErrorToStr(err).c_str()));
 
-    GlyphMetrics glyphMetrics;
+    dpfb::GlyphMetrics glyphMetrics;
     glyphMetrics.advance = face->glyph->advance.x >> 6;
 
     if (face->glyph->format == FT_GLYPH_FORMAT_BITMAP) {
@@ -214,22 +219,23 @@ GlyphMetrics FtFontRenderer::getGlyphMetrics(GlyphIndex glyphIdx) const
 }
 
 
-void FtFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
+void FtFontRenderer::renderGlyph(
+    dpfb::GlyphIndex glyphIdx, dpfb::Image& image) const
 {
     auto err = FT_Load_Glyph(face, glyphIdx, loadFlags);
     if (err != FT_Err_Ok)
-        throw FontRendererError(
-            str::format(
+        throw dpfb::FontRendererError(
+            dpfb::str::format(
                 "Can't load glyph for %s: %s",
-                unicode::cpToStr(idxToCp(face, glyphIdx)),
+                dpfb::unicode::cpToStr(idxToCp(face, glyphIdx)),
                 ftErrorToStr(err).c_str()));
 
     err = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
     if (err != FT_Err_Ok)
-        throw FontRendererError(
-            str::format(
+        throw dpfb::FontRendererError(
+            dpfb::str::format(
                 "Can't render glyph for %s: %s",
-                unicode::cpToStr(idxToCp(face, glyphIdx)),
+                dpfb::unicode::cpToStr(idxToCp(face, glyphIdx)),
                 ftErrorToStr(err).c_str()));
 
     const auto* bitmap = &face->glyph->bitmap;
@@ -260,7 +266,7 @@ void FtFontRenderer::renderGlyph(GlyphIndex glyphIdx, Image& image) const
 }
 
 
-class FtFontRendererCreator : public FontRendererCreator {
+class FtFontRendererCreator : public dpfb::FontRendererCreator {
 public:
     FtFontRendererCreator()
         : FontRendererCreator("ft")
@@ -290,7 +296,8 @@ public:
         return buf;
     }
 
-    FontRenderer* create(const FontRendererArgs& args) const override
+    dpfb::FontRenderer* create(
+        const dpfb::FontRendererArgs& args) const override
     {
         return new FtFontRenderer(args);
     }

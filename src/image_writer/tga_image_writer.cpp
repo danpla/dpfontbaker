@@ -5,15 +5,15 @@
 #include "image_writer/image_writer.h"
 
 
-class TgaImageWriter : public ImageWriter {
+class TgaImageWriter : public dpfb::ImageWriter {
 public:
     TgaImageWriter();
 
     const char* getDescription() const override;
 
     void write(
-        streams::Stream& stream,
-        const Image& image) const override;
+        dpfb::streams::Stream& stream,
+        const dpfb::Image& image) const override;
 };
 
 
@@ -70,7 +70,7 @@ static inline bool comparePixels(const std::uint8_t* data, int bytesPerPixel)
 
 
 static void writeRleRow(
-    streams::Stream& stream,
+    dpfb::streams::Stream& stream,
     const std::uint8_t* row, int w, int bytesPerPixel)
 {
     const auto* rowEnd = row + w * bytesPerPixel;
@@ -121,15 +121,15 @@ static void writeRleRow(
 
 
 void TgaImageWriter::write(
-    streams::Stream& stream, const Image& image) const
+    dpfb::streams::Stream& stream, const dpfb::Image& image) const
 {
     TgaHeader header {};
     header.type = tgaGrayscaleRle;
-    header.yOffset = byteorder::toLe(
+    header.yOffset = dpfb::byteorder::toLe(
         static_cast<std::uint16_t>(image.getHeight()));
-    header.width = byteorder::toLe(
+    header.width = dpfb::byteorder::toLe(
         static_cast<std::uint16_t>(image.getWidth()));
-    header.height = byteorder::toLe(
+    header.height = dpfb::byteorder::toLe(
         static_cast<std::uint16_t>(image.getHeight()));
     header.depth = 8;
     header.descriptor = tgaOriginTopLeft << 4;

@@ -9,6 +9,9 @@
 #include "geometry.h"
 
 
+namespace dpfb {
+
+
 class FontRendererError : public std::runtime_error {
 public:
     using runtime_error::runtime_error;
@@ -36,7 +39,7 @@ struct GlyphMetrics {
     /**
      * Size of the glyph's bitmap.
      */
-    Geometry::Size size;
+    Size size;
 
     /**
      * Offset from the origin.
@@ -45,7 +48,7 @@ struct GlyphMetrics {
      * from the origin on the baseline. Like in FreeType, the y
      * coordinate increases up.
      */
-    Geometry::Point offset;
+    Point offset;
 
     /**
      * X advance.
@@ -104,3 +107,6 @@ private:
     const char* name;
     FontRendererCreator* next;
 };
+
+
+}

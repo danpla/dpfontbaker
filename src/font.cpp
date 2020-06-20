@@ -14,8 +14,10 @@
 #include "unicode.h"
 
 
+namespace dpfb {
+
+
 using namespace streams;
-using namespace Geometry;
 
 
 static std::vector<std::uint8_t> getData(const std::string& fileName)
@@ -657,4 +659,7 @@ void Font::readKerningPairs()
             kerningPairs.push_back({cp1, cp2, rawKerningPair.amount});
         }
     }
+}
+
+
 }

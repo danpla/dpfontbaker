@@ -10,6 +10,7 @@
 #include "byteorder.h"
 
 
+namespace dpfb {
 namespace streams {
 
 
@@ -288,4 +289,5 @@ inline void Stream::writeS32Be(std::int32_t value)
 }
 
 
+}
 }
