@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Add alpha to grayscale images, threating black as transparent and
+# Add alpha to grayscale images, treating black as transparent and
 # white as opaque. This is the same as applying the input image as a
 # mask to a white image of the same size.
 
