@@ -157,3 +157,35 @@ TEST_CASE("utf16ToUtf8", "[unicode]") {
             == item.utf8str);
     }
 }
+
+
+TEST_CASE("encodeUtf16", "[unicode]") {
+    struct Test {
+        char32_t cp;
+        const char16_t* expected;
+    };
+
+    const Test tests[] = {
+        {1,         u"\1"},
+        {'a',       u"a"},
+        {0x9999,    u"\u9999"},
+        {0x10000, 	u"\xd800\xdc00"},
+        {0x10e6d, 	u"\xd803\xde6d"},
+        {0x1d11e, 	u"\xd834\xdd1e"},
+        {0x10ffff, 	u"\xdbff\xdfff"},
+        {0x1111111, u"\ufffd"},
+    };
+
+    for (const auto& test : tests) {
+        INFO(cpToStr(test.cp));
+
+        char16_t utf16[2];
+        const auto numUtf16Chars = encodeUtf16(test.cp, utf16);
+
+        using Utf16Traits = std::char_traits<char16_t>;
+        REQUIRE(numUtf16Chars == Utf16Traits::length(test.expected));
+        REQUIRE(
+            Utf16Traits::compare(
+                utf16, test.expected, numUtf16Chars) == 0);
+    }
+}
