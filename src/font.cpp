@@ -564,7 +564,7 @@ void Font::readFontName()
             ch = fontStream.readU16Be();
 
         *dst = unicode::utf16ToUtf8(
-            &utf16Name[0], &utf16Name[utf16Name.size()]);
+            utf16Name.data(), utf16Name.data() + utf16Name.size());
 
         fontStream.seek(pos, SeekOrigin::set);
     }
