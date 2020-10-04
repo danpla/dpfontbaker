@@ -38,7 +38,8 @@ Font::Font(
     , fontStream {&fontData[0], fontData.size()}
     , sfntOffsetTable {
         fontStream,
-        std::max<std::uint32_t>(bakingOptions.fontIndex, 0)
+        static_cast<std::uint32_t>(
+            std::max(0, bakingOptions.fontIndex)),
     }
     , renderer {}
     , head {}
